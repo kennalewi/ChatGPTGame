@@ -5,17 +5,18 @@ let secondCard = null;
 let lockBoard = false;
 
 const startButton = document.querySelector('.start-button');
-const startScreen = document.querySelector('.start-screen');
-const board = document.querySelector('.board');
-const winScreen = document.getElementById('win-screen');
 const playAgainButton = document.getElementById('play-again-button');
+const board = document.querySelector('.board');
+const startScreen = document.querySelector('.start-screen');
+const winScreen = document.getElementById('win-screen');
 
-hideWinScreen();
+toggleDisplay(winScreen, false);
+toggleDisplay(board, false);
 
 startButton.addEventListener('click', event => {
   shuffleCards();
-  hideStartScreen();
-  showBoard();
+  toggleDisplay(startScreen, false);
+  toggleDisplay(board, true);
 });
 
 board.addEventListener('click', event => {
@@ -47,15 +48,6 @@ function shuffleCards() {
     board.appendChild(cardElement);
     cardElements.push(cardElement);
   });
-}
-
-function hideStartScreen() {
-  startScreen.style.display = 'none';
-}
-
-function showBoard() {
-  board.style.visibility = 'visible';
-  document.querySelector('.board').style.display = "flex";
 }
 
 function flipCard(card) {
@@ -100,19 +92,15 @@ function shuffle(array) {
   return array;
 }
 
-function hideBoard() {
-    document.querySelector('.board').style.display = "none";
-  }  
-
 function checkForWin() {
 const matchedCards = document.querySelectorAll('.match');
 if (matchedCards.length === cards.length) {
-    hideBoard();
-    showWinScreen();
+    toggleDisplay(board, false);
+    toggleDisplay(winScreen, true);
     const matchedCards = document.querySelectorAll('.match');
     if (matchedCards.length === cards.length) {
-    hideBoard();
-    showWinScreen();
+    toggleDisplay(board, false);
+    toggleDisplay(winScreen, true);
     matchedCards.forEach(card => {
         card.parentNode.removeChild(card);
     });
@@ -121,20 +109,14 @@ if (matchedCards.length === cards.length) {
 }
 }
 
-// Show the win screen
-function showWinScreen() {
-    winScreen.style.display = 'flex';
-  }
-  
-// Hide the win screen
-function hideWinScreen() {
-winScreen.style.display = 'none';
-}
-
 // Add a click event listener to the play again button to hide the win screen
 playAgainButton.addEventListener('click', event => {
-    hideWinScreen();
+    toggleDisplay(winScreen, false);
     shuffleCards();
-    hideStartScreen();
-    showBoard();
+    toggleDisplay(startScreen, false);
+    toggleDisplay(board, true);
   });
+
+function toggleDisplay(element, show) {
+    element.style.display = show ? 'flex' : 'none';
+}
