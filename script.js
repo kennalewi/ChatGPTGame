@@ -1,4 +1,17 @@
-const cards = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D'];
+const cards = [  
+"🍇", "🍇", 
+"🍊", "🍊", 
+"🍉", "🍉", 
+"🍓", "🍓", 
+"🍌", "🍌",
+"🥭", "🥭",
+"🍑", "🍑",
+"🍈", "🍈",
+"🍒", "🍒",
+"🍍", "🍍"
+]
+
+;
 
 let firstCard = null;
 let secondCard = null;
@@ -120,3 +133,32 @@ playAgainButton.addEventListener('click', event => {
 function toggleDisplay(element, show) {
     element.style.display = show ? 'flex' : 'none';
 }
+
+const toggleSwitch = document.querySelector('#toggleSwitch');
+
+toggleSwitch.addEventListener('change', function() {
+  if(toggleSwitch.checked) {
+    // do something when toggle is on
+    const testingWindow = document.querySelector('.testingWindow');
+        const autoWinButton = document.createElement("button");
+        autoWinButton.textContent = "Auto Win";
+        autoWinButton.style.display = "block";
+        autoWinButton.style.margin = "20px auto";
+        testingWindow.appendChild(autoWinButton);
+        testingWindow.push;
+
+        autoWinButton.addEventListener("click", function () {
+        const allCards = document.querySelectorAll('.card');
+        allCards.forEach(card => {
+            flipCard(card);
+            card.classList.add("match");
+            setTimeout(() => {
+                checkForWin();
+                }, 1000);
+            toggleDisplay(testingWindow, false);
+            });
+        });
+  } else {
+    // do something when toggle is off
+  }
+});
